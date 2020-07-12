@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import CountryFilter from './components/CountryFilter';
@@ -13,7 +12,6 @@ const App = () => {
     axios.get('https://restcountries.eu/rest/v2/all')
     .then(response => {
       setCountries(response.data);
-      console.log(response.data); // TODO: remove console logs
     });
   }, []);
 

@@ -18,7 +18,7 @@ const CountryData = ({ country }) => {
             ))}
         </ul>
         <div>
-            <img src={country.flag} style={imgStyle} />
+            <img src={country.flag} alt={`The flag of ${country.name}`} style={imgStyle} />
         </div>
     </div>
 };
