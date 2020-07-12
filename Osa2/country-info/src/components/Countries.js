@@ -11,7 +11,6 @@ const Countries = ({ countries, countryFilter }) => {
 
     let searchResult = countries.filter(country =>
         country.name.toLowerCase().includes(countryFilter.toLowerCase()));
-        console.log(selectedCountry);
         
     // Check if selectedCountry != null/undefined or a string matching exactly to filter is found
     const exactName = selectedCountry ?
