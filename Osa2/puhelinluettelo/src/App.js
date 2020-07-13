@@ -3,6 +3,7 @@ import axios from 'axios';
 import Persons from './components/Persons';
 import NameFilterForm from './components/NameFilterForm';
 import AddPersonForm from './components/AddPersonForm';
+import phonebookService from './services/phonebookService';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,9 +12,9 @@ const App = () => {
   const [nameFilter, setNameFilter] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data);
+    phonebookService.getAll()
+    .then(data => {
+      setPersons(data);
     });
   }, [])
 
@@ -30,12 +31,12 @@ const App = () => {
       number: newNumber
     };
 
-    axios.post('http://localhost:3001/persons', newPerson)
-    .then(response => {
-      setPersons(persons.concat(response.data));
+    phonebookService.addNew(newPerson)
+    .then(data => {
+      setPersons(persons.concat(data));
       setNewName('');
       setNewNumber('');
-    })
+    });
     
   };
 
