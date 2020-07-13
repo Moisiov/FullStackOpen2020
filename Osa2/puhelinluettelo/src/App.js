@@ -3,12 +3,14 @@ import Persons from './components/Persons';
 import NameFilterForm from './components/NameFilterForm';
 import AddPersonForm from './components/AddPersonForm';
 import phonebookService from './services/phonebookService';
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [nameFilter, setNameFilter] = useState('');
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     phonebookService.getAll()
@@ -32,6 +34,7 @@ const App = () => {
       if (accept) {
         phonebookService.updateContact(personFound.id, newPerson)
           .then(() => {
+            notify(`Updated ${newPerson.name}`);
             phonebookService.getAll()
               .then(data => {
                 setPersons(data);
@@ -46,9 +49,17 @@ const App = () => {
         setPersons(persons.concat(data));
         setNewName('');
         setNewNumber('');
+        notify(`Added ${newPerson.name}`);
       });
 
   };
+
+  const notify = (msg) => {
+    setErrorMsg(msg);
+    setTimeout(() => {
+      setErrorMsg(null);
+    }, 2000);
+  }
 
   const handleNameChange = (e) => {
     setNewName(e.target.value);
@@ -68,6 +79,7 @@ const App = () => {
     if (accept) {
       phonebookService.deleteContact(person.id)
         .then(() => {
+          notify(`Deleted ${person.name}`);
           phonebookService.getAll()
             .then(data => {
               setPersons(data);
@@ -78,6 +90,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={errorMsg} />
       <h2>Phonebook</h2>
       <NameFilterForm nameFilter={nameFilter} handleNameFilterChange={handleNameFilterChange} />
       <h3>Add new</h3>
