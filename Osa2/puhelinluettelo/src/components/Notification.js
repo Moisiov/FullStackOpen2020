@@ -8,7 +8,7 @@ const Notification = ({ message, type='notify-success' }) => {
     return (
         <div className='notification-container'>
         <div className={`notification ${type}`}>
-            <p>{message}</p>
+            <p><strong>{message}</strong></p>
         </div>
         </div>
     );

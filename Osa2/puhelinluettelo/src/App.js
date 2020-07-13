@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [nameFilter, setNameFilter] = useState('');
   const [errorMsg, setErrorMsg] = useState(null);
+  const [notificationType, setNotificationType] = useState(null);
 
   useEffect(() => {
     phonebookService.getAll()
@@ -39,6 +40,12 @@ const App = () => {
               .then(data => {
                 setPersons(data);
               });
+          }).catch(e => {
+            notify(`${newPerson.name} not found`, true);
+            phonebookService.getAll()
+              .then(data => {
+                setPersons(data);
+              });
           });
       }
       return;
@@ -50,14 +57,22 @@ const App = () => {
         setNewName('');
         setNewNumber('');
         notify(`Added ${newPerson.name}`);
+      }).catch(e => {
+        notify(`Operation failed`, true);
       });
 
   };
 
-  const notify = (msg) => {
+  const notify = (msg, error) => {
+    if (error) {
+      setNotificationType('notify-error');
+    } else {
+      setNotificationType('notify-success');
+    }
     setErrorMsg(msg);
     setTimeout(() => {
       setErrorMsg(null);
+      setNotificationType(null);
     }, 2000);
   }
 
@@ -84,13 +99,19 @@ const App = () => {
             .then(data => {
               setPersons(data);
             });
+        }).catch(e => {
+          notify(`${person.name} has already been deleted`, true);
+          phonebookService.getAll()
+            .then(data => {
+              setPersons(data);
+            });
         });
     }
   };
 
   return (
     <div>
-      <Notification message={errorMsg} />
+      <Notification message={errorMsg} type={notificationType} />
       <h2>Phonebook</h2>
       <NameFilterForm nameFilter={nameFilter} handleNameFilterChange={handleNameFilterChange} />
       <h3>Add new</h3>
