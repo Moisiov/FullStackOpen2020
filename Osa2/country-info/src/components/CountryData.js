@@ -6,7 +6,7 @@ const CountryData = ({ country }) => {
         maxHeight: '250px',
         border: '4px solid gray',
         borderRadius: '8px'
-    }
+    };
 
     return <div>
         <h3>{country.name}</h3>
@@ -24,7 +24,7 @@ const CountryData = ({ country }) => {
         <div>
             <Weather city={country.capital} />
         </div>
-    </div>
+    </div>;
 };
 
 export default CountryData;
