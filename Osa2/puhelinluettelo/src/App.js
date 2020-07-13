@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Persons from './components/Persons';
 import NameFilterForm from './components/NameFilterForm';
 import AddPersonForm from './components/AddPersonForm';
@@ -13,9 +12,9 @@ const App = () => {
 
   useEffect(() => {
     phonebookService.getAll()
-    .then(data => {
-      setPersons(data);
-    });
+      .then(data => {
+        setPersons(data);
+      });
   }, [])
 
   const addPerson = (e) => {
@@ -32,12 +31,12 @@ const App = () => {
     };
 
     phonebookService.addNew(newPerson)
-    .then(data => {
-      setPersons(persons.concat(data));
-      setNewName('');
-      setNewNumber('');
-    });
-    
+      .then(data => {
+        setPersons(persons.concat(data));
+        setNewName('');
+        setNewNumber('');
+      });
+
   };
 
   const handleNameChange = (e) => {
@@ -52,6 +51,20 @@ const App = () => {
     setNameFilter(e.target.value);
   };
 
+  const handleDeleteBtnClick = (person) => {
+    let accept = window.confirm(`Delete ${person.name}?`);
+
+    if (accept) {
+      phonebookService.deletePerson(person.id)
+        .then(() => {
+          phonebookService.getAll()
+            .then(data => {
+              setPersons(data);
+            });
+        });
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -63,7 +76,7 @@ const App = () => {
         newNumber={newNumber}
         handleNumberChange={handleNumberChange} />
       <h3>Numbers</h3>
-      <Persons persons={persons} filter={nameFilter} />
+      <Persons persons={persons} filter={nameFilter} handleDeleteBtnClick={handleDeleteBtnClick} />
     </div>
   );
 

@@ -6,11 +6,6 @@
       "id": 1
     },
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
@@ -24,11 +19,6 @@
       "name": "Valto Moisio",
       "number": "040723200",
       "id": 5
-    },
-    {
-      "name": "Aleksi Toivonen",
-      "number": "asdfqwer",
-      "id": 6
     }
   ]
 }
