@@ -3,10 +3,9 @@ import axios from 'axios';
 
 const Weather = ({ city }) => {
     const [weatherData, setWeatherData] = useState();
-    const apiKey = process.env.REACT_APP_API_KEY;
 
     useEffect(() => {
-        axios.get(`http://api.weatherstack.com/current?access_key=${apiKey}&query=${city.toLowerCase()}`)
+        axios.get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=${city.toLowerCase()}`)
             .then(response => {
                 setWeatherData(response.data.current);
             });
